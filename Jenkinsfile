@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'avr-gcc -mmcu=atmega8 cubelib.c main.c'
+                sh './build.sh'
             }
         }
     }
