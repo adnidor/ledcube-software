@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh avr-gcc cubelib.c main.c
+                sh 'avr-gcc cubelib.c main.c'
             }
         }
     }
