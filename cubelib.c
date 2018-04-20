@@ -51,6 +51,9 @@ void init_spi() {
     DDRB |= (1<<PB3)|(1<<PB5)|(1<<PB0);
     SPCR = (1<<SPE)|(1<<SPIE)|(1<<MSTR);
     SPSR = (1<<SPI2X);
+
+    DDRB |= (1<<PB0);
+    PORTB &= ~(1<<PB0);
 }
 
 void write_out() {
