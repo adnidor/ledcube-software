@@ -9,4 +9,10 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            archiveArtefacts artifacts: 'a.out'
+        }
+    }
 }
