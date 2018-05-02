@@ -12,7 +12,7 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: 'a.out'
+            archiveArtifacts artifacts: 'ledcube.bin'
         }
     }
 }
