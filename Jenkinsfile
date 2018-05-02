@@ -18,6 +18,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: 'ledcube.bin'
+            junit 'CUnitAutomated-Results.xml'
         }
     }
 }

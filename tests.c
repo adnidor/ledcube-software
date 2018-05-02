@@ -1,5 +1,5 @@
 #include <CUnit/CUnit.h>
-#include <CUnit/Basic.h>
+#include <CUnit/Automated.h>
 
 int add(int a, int b) {
     return a+b;
@@ -32,8 +32,8 @@ int main() {
       return CU_get_error();
    }
 
-   /* Run all tests using the CUnit Basic interface */
-   CU_basic_set_mode(CU_BRM_VERBOSE);
+   /* Run all tests using the CUnit Automated interface */
+   CU_automated_run_tests();
    CU_basic_run_tests();
    CU_cleanup_registry();
    return CU_get_error();
