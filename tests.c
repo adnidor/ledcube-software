@@ -34,7 +34,6 @@ int main() {
 
    /* Run all tests using the CUnit Automated interface */
    CU_automated_run_tests();
-   CU_basic_run_tests();
    CU_cleanup_registry();
    return CU_get_error();
 }
