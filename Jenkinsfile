@@ -8,6 +8,11 @@ pipeline {
                 sh './build.sh'
             }
         }
+        stage('Test') {
+            steps {
+                sh './tests'
+            }
+        }
     }
 
     post {
