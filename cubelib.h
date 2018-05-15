@@ -14,4 +14,6 @@ void wait_for_transfer() ;
 void init_spi() ;
 
 void write_out() ;
+
+void soft_write_out() ;
 #endif
