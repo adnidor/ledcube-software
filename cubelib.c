@@ -7,7 +7,7 @@ uint8_t framebuffer[4];
 volatile uint8_t transfer_in_progress = 0;
 volatile uint8_t spi_transfer_index = 0;
 
-inline void set_pixel(int row, int column) {
+void set_pixel(int row, int column) {
     if (row == 8) {
         framebuffer[3] |= (1<<column);
         return;
@@ -16,7 +16,7 @@ inline void set_pixel(int row, int column) {
     framebuffer[column] |= (1<<row);
 }
     
-inline void unset_pixel(int row, int column) {
+void unset_pixel(int row, int column) {
     if (row == 8) {
         framebuffer[3] &= ~(1<<column);
         return;
@@ -52,7 +52,6 @@ void init_spi() {
     //SPCR = (1<<SPE)|(1<<SPIE)|(1<<MSTR);
     //SPSR = (1<<SPI2X);
 
-    DDRB |= (1<<PB0);
     PORTB &= ~(1<<PB0);
 }
 
@@ -76,17 +75,18 @@ void soft_write_out() {
     #define MOSI_ON PORTB |= (1<<PB3);
     #define MOSI_OFF PORTB &= ~(1<<PB3);
 
-    for (int i = 0; i<4; i++) {
+    for (int i = 4; i>0; i--) {
         for (int j = 0; j<8; j++) {
-            if (framebuffer[i] & (1<<j) != 0)
+            if ((framebuffer[i-1] & (1<<j)) != 0)
                 MOSI_ON
             else
                 MOSI_OFF
-            _delay_us(10);
             SCK_ON
-            _delay_ms(1);
             SCK_OFF
-            _delay_ms(1);
         }
     }
+    //toggle RCLK after completion
+    PORTB |= (1<<PB0);
+    //_delay_us(10);
+    PORTB &= ~(1<<PB0);
 }
