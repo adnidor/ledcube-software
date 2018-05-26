@@ -7,13 +7,13 @@ void loop() {
             set_pixel(i,j);
             soft_write_out();
             _delay_ms(100);
-            unset_pixel(i,j);
+            //unset_pixel(i,j);
         }
     }    
+    clear_screen();
 }
 
 void main() {
-    cli();
     init_spi();
     while(1)
         loop();

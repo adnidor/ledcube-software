@@ -1,6 +1,7 @@
 #include<avr/interrupt.h>
 #include<avr/io.h>
 #include<util/delay.h>
+#include<inttypes.h>
 #include"cubelib.h"
 
 uint8_t framebuffer[4];
@@ -9,20 +10,31 @@ volatile uint8_t spi_transfer_index = 0;
 
 void set_pixel(int row, int column) {
     if (row == 8) {
-        framebuffer[3] |= (1<<column);
+        framebuffer[3] |= (128>>column);
         return;
     }
 
-    framebuffer[column] |= (1<<row);
+    framebuffer[column] |= (128>>row);
 }
     
 void unset_pixel(int row, int column) {
     if (row == 8) {
-        framebuffer[3] &= ~(1<<column);
+        framebuffer[3] &= ~(128>>column);
         return;
     }
 
-    framebuffer[column] &= ~(1<<row);
+    framebuffer[column] &= ~(128>>row);
+}
+
+void set_raw_framebuffer(uint32_t content) {
+    framebuffer[0] = content;
+    framebuffer[1] = content>>8;
+    framebuffer[2] = content>>16;
+    framebuffer[3] = content>>24;
+}
+
+void clear_screen() {
+    set_raw_framebuffer(0);
 }
 
 ISR(SPI_STC_vect) {
@@ -67,6 +79,8 @@ void write_out() {
 }
 
 void soft_write_out() {
+    uint8_t tmp_SREG = SREG;
+    cli();
     // SCK == PB5
     // MOSI == PB3
 
@@ -89,4 +103,7 @@ void soft_write_out() {
     PORTB |= (1<<PB0);
     //_delay_us(10);
     PORTB &= ~(1<<PB0);
+
+    SREG = tmp_SREG;
+
 }

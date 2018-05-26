@@ -5,20 +5,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh './build.sh'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh './tests'
+                sh 'make'
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'ledcube.bin'
-            archiveArtifacts artifacts: 'CUnitAutomated-Results.xml'
+            archiveArtifacts artifacts: '*.bin'
         }
     }
 }
