@@ -2,6 +2,10 @@
 import json
 from sys import argv
 
+if len(argv) != 2:
+    print("argument needed")
+    exit(1)
+
 frame = json.load(open(argv[1]))
 
 byte0 = 0x00
